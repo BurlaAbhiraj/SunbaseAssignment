@@ -4,69 +4,95 @@
   <meta charset="UTF-8">
   <title>Add Customer Page</title>
   <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 25px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .form-row {
-            display: inline-block;
-            width: 100%; /* Adjust as needed */
-            margin-right: 2%;
-            margin-bottom: 15px;
-            vertical-align: top; /* Align elements at the top */
-        }
-        .form-row:last-child {
-            margin-right: 0;
-        }
-        .form-row label {
-            width: 15%; /* Adjust as needed */
-            margin-right: 10px; /* Adjust spacing between label and input */
-            text-align: right; /* Align label text to the right */
-            display: inline-block;
-        }
-        .form-row input {
-            width: calc(80% - 8px); /* Adjust as needed */
-            display: inline-block;
-        }
-        input[type="text"], input[type="email"], input[type="tel"] {
-            width: 25%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 25px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    .form-row label {
+        width: 15%;
+        margin-right: 10px;
+        text-align: right;
+    }
+
+    .form-row input[type="text"],
+    .form-row input[type="email"],
+    .form-row input[type="tel"] {
+        width: 25%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    h2 {
+        text-align: center;
+        color: #007bff;
+    }
+
+    button {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    #message {
+        margin-bottom: 10px;
+        text-align: center;
+        color: #d9534f;
+        font-weight: bold;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
   <div style="display: flex; justify-content: center; align-items: center;">
-  <h2>Add Customer Page</h2>
+    <h2>Add Customer Page</h2>
   </div>
 
-  <div><button onclick="dashboard()">Home</button></div>
+  <div>
+    <button onclick="dashboard()">Home</button>
+  </div>
 
-  <div id="message" style="margin-bottom: 10px;"></div>
+  <div id="message"></div>
   <form action="/customer-login/register-customer" method="post">
     <div class="form-row">
       <label for="first_name">First Name:</label>
@@ -95,32 +121,29 @@
       <label for="phone">Phone:</label>
       <input type="tel" id="phone" name="phone" placeholder="Phone number" pattern="[0-9]{10}" required>
     </div>
+
     <div style="display: flex; justify-content: center; align-items: center;">
       <input type="submit" value="Submit">
     </div>
-
   </form>
 </div>
 <script th:inline="javascript">
-    // Retrieve token from local storage and set it as the value of the token input field
-    var token = localStorage.getItem('token');
-    function dashboard(){
-    var form = document.createElement("form");
-                form.setAttribute("method", "GET");
-                form.setAttribute("action", "/dashboard/"+token);
-                  document.body.appendChild(form);
+  var token = localStorage.getItem('token');
 
-                // Submit the form
-                form.submit();
-    }
-    /*<![CDATA[*/
-    var message = /*[[${message}]]*/ null;
-    console.log(message);
-    if (message) {
-        var messageDiv = document.getElementById('message');
-        messageDiv.innerText = message;
-    }
-    /*]]>*/
+  function dashboard() {
+      var form = document.createElement("form");
+      form.setAttribute("method", "GET");
+      form.setAttribute("action", "/dashboard/" + token);
+      document.body.appendChild(form);
+      form.submit();
+  }
+
+  var message = /*[[${message}]]*/ null;
+  console.log(message);
+  if (message) {
+      var messageDiv = document.getElementById('message');
+      messageDiv.innerText = message;
+  }
 </script>
 </body>
 </html>
